@@ -1,6 +1,6 @@
 import mongoose, { ConnectOptions } from 'mongoose';
 
-const server: string = 'mongodb+srv://Agreement:0192837465@salesdashboard.iqak9tl.mongodb.net/?retryWrites=true&w=majority'; 
+const server: string = 'mongodb+srv:/'; 
 const database: string = 'credipple';
 
 class MongoDB {
