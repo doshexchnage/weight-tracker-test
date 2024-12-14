@@ -12,6 +12,9 @@ export default {
       backgroundImage: {
         'custom-gradient': 'linear-gradient(to top, #82A6CB, #3667A6)',
       },
+      fontFamily: {
+        sans: ['Roboto', 'sans-serif'], // Set Roboto as the global font
+      },
     },
   },
   plugins: [],

@@ -1,18 +1,14 @@
-// Middleware URL configuration
-const middlewareURL: string =
-  process.env.REACT_APP_MIDDLEWARE_URL || 'http://127.0.0.1:7001';
+// Middleware URL
+const middlewareURL: string =  'http://127.0.0.1:7001';
 
-// Helper function to retrieve JWT from localStorage
+// Helper function
 const getJWT = (): string => {
   const jwt = window.localStorage.getItem('jwt');
   return jwt || '';
 };
 
 // Helper function to handle Fetch requests
-const fetchWithAuth = async (
-  endpoint: string,
-  options: RequestInit = {}
-): Promise<any> => {
+const fetchWithAuth = async (endpoint: string,options: RequestInit = {}): Promise<any> => {
   const headers = {
     'Content-Type': 'application/json',
     Accept: 'application/json',
@@ -35,53 +31,38 @@ const fetchWithAuth = async (
 
 // Auth API methods
 const Auth = {
-  PasswordLogin: async (
-    email: string,
-    password: { password: string }
-  ): Promise<any> => {
+  PasswordLogin: async (email: string, Password:{ Password: string} ): Promise<any> => {
     return fetchWithAuth(`/auth/login/password/${email}`, {
-      method: 'PATCH',
-      body: JSON.stringify(password),
+      method: 'POST',
+      body: JSON.stringify(Password),
     });
   },
 };
 
-// User API methods
-const User = {
-  createUser: async (data: Record<string, any>): Promise<any> => {
-    return fetchWithAuth(`/user`, {
+// Weight API methods
+const Weight = {
+  createWeight: async (data: Record<string, any>): Promise<any> => {
+    return fetchWithAuth(`/weights`, {
       method: 'POST',
       body: JSON.stringify(data),
     });
   },
-  getUserById: async (id: string): Promise<any> => {
-    return fetchWithAuth(`/user/id/${id}`, {
+  getWeights: async (): Promise<any> => {
+    return fetchWithAuth('/weights', {
       method: 'GET',
     });
   },
-  getUsers: async (): Promise<any> => {
-    return fetchWithAuth('/user', {
-      method: 'GET',
-    });
-  },
-  updateUserById: async (
-    id: string,
-    data: Record<string, any>
-  ): Promise<any> => {
-    return fetchWithAuth(`/user/id/${id}`, {
-      method: 'PATCH',
+  updateWeightById: async ( data: Record<string, any>): Promise<any> => {
+    return fetchWithAuth(`/weights`, {
+      method: 'PUT',
       body: JSON.stringify(data),
     });
   },
-  updatePassword: async (
-    email: string,
-    password: { newPassword: string }
-  ): Promise<any> => {
-    return fetchWithAuth(`/updatepassword/password/${email}`, {
-      method: 'PATCH',
-      body: JSON.stringify(password),
+  deleteWeightById: async (id: string): Promise<any> => {
+    return fetchWithAuth(`/weights/${id}`, {
+      method: 'DELETE',
     });
   },
 };
 
-export { Auth, User };
+export { Auth, Weight };

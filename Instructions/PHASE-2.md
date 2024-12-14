@@ -15,12 +15,11 @@
 4. **DELETE `/weights/:id`**: Remove a weight entry.
 
 ### Front-End Modifications
-
+ 
 **Pages:**
 - **Main Page (`main.tsx`)**
   - Now fetch weights from the `/weights` endpoint when the component mounts.
   - Update weights list in real-time or on refresh after adding, updating, or deleting.
-
 **Components:**
 - **Add Weight Component (`add_weight.tsx`)**
   - Post new weight to `/weights` endpoint on submission.

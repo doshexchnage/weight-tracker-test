@@ -1,54 +1,185 @@
-import { observable, action, makeObservable } from "mobx
-import { Auth,User } from "../services/requests";
+import { makeObservable, observable, action } from "mobx";
+import { Auth, Weight } from "../services/requests";
 
-class AuthStore {
-  @observable isLoggedIn: boolean = false;
-  @observable user: any = null; // Define a more specific type based on your user structure
-  @observable isLoading: boolean = false;
-  @observable error: string | null = null;
+interface User {
+  id: string;
+  email: string;
+  name: string;
+}
+
+interface AuthResponse {
+  user: User;
+  jwt: string;
+}
+
+class Store {
+  user: User | null = null;
+  isLoading: boolean = false;
+  error: string | null = null;
 
   constructor() {
-    makeObservable(this);
+    makeObservable(this, {
+      user: observable,
+      isLoading: observable,
+      error: observable,
+      setUser: action,
+      setLoading: action,
+      setError: action,
+      login: action,
+      logout: action,
+    });
   }
 
-  @action setLoggedIn(value: boolean) {
-    this.isLoggedIn = value;
-  }
-
-  @action setUser (user: any) {
+  setUser(user: User | null) {
     this.user = user;
   }
 
-  @action setLoading(value: boolean) {
+  setLoading(value: boolean) {
     this.isLoading = value;
   }
 
-  @action setError(message: string | null) {
+  setError(message: string | null) {
     this.error = message;
   }
 
-  @action async login(email: string, password: string): Promise<boolean> {
+  //login
+  async login(email: string, password: { Password: string }) {
+    if (!email || !password) {
+      this.setError("Email and password are required.");
+      return false;
+    }
     this.setLoading(true);
-    this.setError(null); // Reset error before login attempt
+    this.setError(null);
 
     try {
-      const response = await Auth.PasswordLogin(email, { password });
-      this.setUser (response.data.response.user);
-      this.setLoggedIn(true);
-      window.localStorage.setItem('jwt', response.data.response.jwt); // Store JWT
-      return true;
-    } catch (error) {
+      const response = await Auth.PasswordLogin(email.trim(), password);
+      console.log(response)
+      if (response && response.user && response.jwt) {
+
+        const { user, jwt }: AuthResponse = response;
+        window.localStorage.setItem('jwt', jwt);
+        this.setUser(user);
+        return true;
+      }
+      this.setError("Invalid response from server.");
+      return false;
+    } catch (error: any) {
+      if (error.response && error.response.status === 401) {
+        this.setError("Invalid email or password.");
+      } else if (error.response && error.response.status >= 500) {
+        this.setError("Server error. Please try again later.");
+      } else {
+        this.setError("Login failed. Please check your network connection.");
+      }
       return false;
     } finally {
       this.setLoading(false);
-    }
-  }
+    };
+  };
 
-  @action logout() {
-    this.setUser (null);
-    this.setLoggedIn(false);
-    window.localStorage.removeItem('jwt'); // Clear JWT on logout
+  //create weight
+  async createWeight(data: {}) {
+    this.setLoading(true);
+    this.setError(null);
+
+    try {
+      const response = await Weight.createWeight(data);
+      if (response.weight !== 'error') {
+        return response.weight
+      };
+    } catch (error: any) {
+      if (error.response && error.response.status === 401) {
+        this.setError("Invalid email or password.");
+      } else if (error.response && error.response.status >= 500) {
+        this.setError("Server error. Please try again later.");
+      } else {
+        this.setError("Login failed. Please check your network connection.");
+      };
+      return false;
+    } finally {
+      this.setLoading(false);
+    };
+  };
+
+  //get all weights
+  async getWeights() {
+    this.setLoading(true);
+    this.setError(null);
+
+    try {
+      const response = await Weight.getWeights();
+      console.log(response)
+      if (response.weights !== 'error') {
+        return response.weights
+      };
+    } catch (error: any) {
+      if (error.response && error.response.status === 401) {
+        this.setError("Invalid email or password.");
+      } else if (error.response && error.response.status >= 500) {
+        this.setError("Server error. Please try again later.");
+      } else {
+        this.setError("Login failed. Please check your network connection.");
+      };
+      return false;
+    } finally {
+      this.setLoading(false);
+    };
+  };
+
+  //update weight
+  async updateWeight(data:{}) {
+    this.setLoading(true);
+    this.setError(null);
+
+    try {
+      const response = await Weight.updateWeightById(data);
+      console.log(response)
+      if (response.weight !== 'error') {
+        return response.weight
+      };
+    } catch (error: any) {
+      if (error.response && error.response.status === 401) {
+        this.setError("Invalid email or password.");
+      } else if (error.response && error.response.status >= 500) {
+        this.setError("Server error. Please try again later.");
+      } else {
+        this.setError("Login failed. Please check your network connection.");
+      };
+      return false;
+    } finally {
+      this.setLoading(false);
+    };
+  };
+
+  //delete weight
+  async deleteWeight(ID :string) {
+    this.setLoading(true);
+    this.setError(null);
+
+    try {
+      const response = await Weight.deleteWeightById(ID);
+      console.log(response)
+      if (response.weight !== 'error') {
+        return response.weight
+      };
+    } catch (error: any) {
+      if (error.response && error.response.status === 401) {
+        this.setError("Invalid email or password.");
+      } else if (error.response && error.response.status >= 500) {
+        this.setError("Server error. Please try again later.");
+      } else {
+        this.setError("Login failed. Please check your network connection.");
+      };
+      return false;
+    } finally {
+      this.setLoading(false);
+    };
+  };
+
+  logout() {
+    this.setUser(null);
+    document.cookie = "jwt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
   }
 }
 
-export default AuthStore;
+export default Store;
