@@ -31,10 +31,11 @@ const fetchWithAuth = async (endpoint: string,options: RequestInit = {}): Promis
 
 // Auth API methods
 const Auth = {
-  PasswordLogin: async (email: string, Password:{ Password: string} ): Promise<any> => {
+  PasswordLogin: async (email: string,password:{}): Promise<any> => {
+    console.log(password , email)
     return fetchWithAuth(`/auth/login/password/${email}`, {
       method: 'POST',
-      body: JSON.stringify(Password),
+      body: JSON.stringify(password),
     });
   },
 };

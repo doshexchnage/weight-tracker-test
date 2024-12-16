@@ -27,23 +27,22 @@ class Store {
       setError: action,
       login: action,
       logout: action,
+
     });
   }
 
   setUser(user: User | null) {
     this.user = user;
-  }
-
+  };
   setLoading(value: boolean) {
     this.isLoading = value;
-  }
-
+  };
   setError(message: string | null) {
     this.error = message;
-  }
+  };
 
   //login
-  async login(email: string, password: { Password: string }) {
+  async login(email: string, password: {}) {
     if (!email || !password) {
       this.setError("Email and password are required.");
       return false;
@@ -127,7 +126,7 @@ class Store {
   };
 
   //update weight
-  async updateWeight(data:{}) {
+  async updateWeight(data: {}) {
     this.setLoading(true);
     this.setError(null);
 
@@ -152,7 +151,7 @@ class Store {
   };
 
   //delete weight
-  async deleteWeight(ID :string) {
+  async deleteWeight(ID: string) {
     this.setLoading(true);
     this.setError(null);
 
@@ -181,5 +180,5 @@ class Store {
     document.cookie = "jwt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
   }
 }
-
-export default Store;
+const store = new Store();
+export default store;

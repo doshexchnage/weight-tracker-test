@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer components{
+    .main-container{
+        @apply h-screen w-screen flex flex-col  items-center overflow-y-scroll
+    }
+}

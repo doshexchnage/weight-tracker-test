@@ -15,7 +15,7 @@
     }
     input:focus{
           @apply
-           bg-sky-200
+           bg-sky-200 p-4
     }
     span{
         @apply
