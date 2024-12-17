@@ -4,42 +4,47 @@
 
 @layer base {
     p {
-        @apply 
-           text-5xl 
-           text-center font-bold;
+        @apply font-bold text-5xl text-center;
     }
+
     input {
-        @apply
-            bg-transparent w-11/12 m-1 h-12 rounded-3xl p-5 
-            border-2 border-sky-400 backdrop-blur-md text-gray-700
+        
+        @apply bg-transparent w-11/12 m-1 h-12 rounded-3xl  border-2 border-sky-400 backdrop-blur-md text-gray-700
     }
-    input:focus{
-          @apply
-           bg-sky-200 p-4
+
+    input:focus {
+        @apply bg-sky-200 p-4
     }
-    span{
-        @apply
-         bg-sky-400 w-2/4 h-10 rounded-3xl flex flex-col justify-center text-center text-xl
+
+    span {
+        cursor: pointer;
+        @apply bg-sky-400 w-2/4 h-10 rounded-3xl flex flex-col justify-center text-center text-xl 
     }
-    span:focus{
+
+    span:focus {
         @apply bg-sky-200
     }
 }
 
 @layer components {
     .login-container {
-        @apply
-            h-screen flex flex-col
-            justify-center items-center w-full;
+        @apply flex flex-col justify-center items-center w-full h-screen;
     }
-    .card {
+
+    .card,
+    .card_desk {
         height: 45%;
         align-items: center;
-        @apply flex flex-col justify-around w-full;
+        border-radius: 15px;
+        @apply flex flex-col justify-around;
     }
+
+    .card_desk {
+        box-shadow: -5px 4px 9px 1px rgba(0, 0, 0, 0.43);
+        @apply w-1/2
+    }
+
     .slogan {
-        @apply 
-            text-sm text-center 
-            font-medium mb-2;
+        @apply mb-2 font-medium text-center text-sm;
     }
 }

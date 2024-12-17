@@ -1,5 +1,9 @@
-/* Full-screen overlay with gradient background */
-.loading-container {
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components{
+  .loading-container {
     position: fixed;
     top: 0;
     left: 0;
@@ -9,15 +13,33 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #1e3c72, #2a5298, #659dbd);
+    backdrop-filter: blur(5px);
     background-size: 300% 300%;
     animation: gradientBG 6s ease infinite;
     color: white;
     font-family: 'Arial', sans-serif;
     z-index: 9999;
   }
-  
-  /* Animation for gradient background */
+  .loading-text {
+    font-size: 1.2rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-align: center;
+    opacity: 0.9;
+    animation: fadeIn 2s infinite alternate;
+  }
+  .spinner {
+    
+    border: 8px solid rgba(255, 255, 255, 0.3);
+    border-top: 16px solid ;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    animation: spin 1.2s linear infinite;
+    margin-bottom: 20px;
+    @apply border-t-sky-400
+  }
+
   @keyframes gradientBG {
     0% {
       background-position: 0% 50%;
@@ -30,16 +52,7 @@
     }
   }
   
-  /* Circular spinner animation */
-  .spinner {
-    border: 8px solid rgba(255, 255, 255, 0.3);
-    border-top: 8px solid #ffffff;
-    border-radius: 50%;
-    width: 80px;
-    height: 80px;
-    animation: spin 1.5s linear infinite;
-    margin-bottom: 20px;
-  }
+
   
   @keyframes spin {
     0% {
@@ -50,15 +63,7 @@
     }
   }
   
-  /* Loading text style */
-  .loading-text {
-    font-size: 1.2rem;
-    font-weight: 500;
-    letter-spacing: 1px;
-    text-align: center;
-    opacity: 0.9;
-    animation: fadeIn 2s infinite alternate;
-  }
+  
   
   @keyframes fadeIn {
     from {
@@ -69,3 +74,6 @@
     }
   }
   
+}
+
+ 

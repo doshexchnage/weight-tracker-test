@@ -43,6 +43,7 @@ class Store {
 
   //login
   async login(email: string, password: {}) {
+
     if (!email || !password) {
       this.setError("Email and password are required.");
       return false;
@@ -52,7 +53,6 @@ class Store {
 
     try {
       const response = await Auth.PasswordLogin(email.trim(), password);
-      console.log(response)
       if (response && response.user && response.jwt) {
 
         const { user, jwt }: AuthResponse = response;
@@ -107,7 +107,6 @@ class Store {
 
     try {
       const response = await Weight.getWeights();
-      console.log(response)
       if (response.weights !== 'error') {
         return response.weights
       };
@@ -132,7 +131,6 @@ class Store {
 
     try {
       const response = await Weight.updateWeightById(data);
-      console.log(response)
       if (response.weight !== 'error') {
         return response.weight
       };
@@ -157,7 +155,6 @@ class Store {
 
     try {
       const response = await Weight.deleteWeightById(ID);
-      console.log(response)
       if (response.weight !== 'error') {
         return response.weight
       };

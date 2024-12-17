@@ -43,7 +43,6 @@ const LoginPage = ({ setIsLoggedIn }: { setIsLoggedIn: React.Dispatch<React.SetS
     const IsLogged = await store.login(Creds.Email, data);
   
     if (IsLogged) {
-      console.log('Login successful');
       setIsLoggedIn(true);
     } else {
       setIsError(true);
@@ -60,8 +59,8 @@ const LoginPage = ({ setIsLoggedIn }: { setIsLoggedIn: React.Dispatch<React.SetS
         <div className='card'>
           <p>LET'S CREATE</p>
           <p className='slogan'>BE BOLD, BE COURAGEUOS, LET'S CRAFT</p>
-          <input onChange={getCreds} id='email' type='text' placeholder='Email' />
-          <input onChange={getCreds} id='pass' type='password' placeholder='Password' />
+          <input onChange={getCreds} className='p-3' id='email' type='text' placeholder='Email' />
+          <input onChange={getCreds} className='p-3' id='pass' type='password' placeholder='Password' />
           {IsError ? <p className='font-medium text-lg text-red-600'>{ErrMsg}</p> : null}
           <span onClick={handleLogin}>Login</span>
         </div>
@@ -69,7 +68,16 @@ const LoginPage = ({ setIsLoggedIn }: { setIsLoggedIn: React.Dispatch<React.SetS
     );
   } else {
     return (
-      <div>Desktop view</div>
+      <div className="login-container" >
+        <div className='backdrop-blur-3xl card_desk' >
+          <p>LET'S CREATE</p>
+          <p className='slogan'>BE BOLD, BE COURAGEUOS, LET'S CRAFT</p>
+          <input onChange={getCreds} className='p-3' id='email' type='text' placeholder='Email' />
+          <input onChange={getCreds} className='p-3' id='pass' type='password' placeholder='Password' />
+          {IsError ? <p className='font-medium text-lg text-red-600'>{ErrMsg}</p> : null}
+          <span onClick={handleLogin}>Login</span>
+        </div>
+      </div>
     )
   }
 };
