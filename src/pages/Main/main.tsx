@@ -86,7 +86,7 @@ const Main: React.FC = () => {
         }
         store.setLoading(false)
     };
-
+function closeCard(){setIsAdd(false)};
     return (
         <div className="flex flex-col items-center w-full h-screen overflow-x-hidden overflow-y-scroll ancestor-container">
             <div className="p-4 w-full max-w-xl main-container">
@@ -101,7 +101,7 @@ const Main: React.FC = () => {
                 }) : <p>NO DATA</p>}
                 <span onClick={toggleAddWeight} className="m-4 cursor-pointer">+</span>
 
-                {IsAdd ? <Add_weigh onSubmit={createWeight} /> : null}
+                {IsAdd ? <Add_weigh onSubmit={createWeight} onClose={closeCard} /> : null}
             </div>
             {IsUpdate ?
                 <div className="add_weight">
