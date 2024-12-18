@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import {useState} from 'react';
 import { observer } from 'mobx-react-lite'; // Import observer
 import store from './store/store';
 import { Loading } from './components/component';

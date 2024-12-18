@@ -1,5 +1,4 @@
-import React from "react";
-import "./style.css"; // Import the accompanying CSS for styles
+import "./style.css";
 
 const Loading = () => {
   return (

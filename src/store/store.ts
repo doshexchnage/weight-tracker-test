@@ -54,7 +54,6 @@ class Store {
     try {
       const response = await Auth.PasswordLogin(email.trim(), password);
       if (response && response.user && response.jwt) {
-
         const { user, jwt }: AuthResponse = response;
         window.localStorage.setItem('jwt', jwt);
         this.setUser(user);
